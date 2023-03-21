@@ -1,0 +1,6 @@
+syntax = "v2"
+
+import (
+	"api/public.api"
+	"api/user.api"
+)

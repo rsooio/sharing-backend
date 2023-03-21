@@ -1,0 +1,57 @@
+syntax = "v2"
+
+type ID {
+	ID uint `json:"uid",path:"uid"`
+}
+
+type Resource {
+	Role     int    `json:"role,optional"`
+	Mobile   string `json:"mobile,optional"`
+	Username string `json:"username,optional"`
+}
+
+type Detail {
+	ID
+	Resource
+}
+
+type Paginator {
+	PageSize   int `form:"ps"`
+	PageNumber int `form:"pn"`
+}
+
+type PasswordChange {
+	ID
+	Password    string `json:"pwd"`
+	NewPassword string `json:"new_pwd"`
+}
+
+type DetailList {
+	DetailList []Detail `json:"list"`
+	Total      int64    `json:"total"`
+}
+
+@server(
+	// jwt: Auth
+	middleware: JWTParser
+	group: user
+)
+service backend-api {
+	@handler Create
+	post /user(Resource) returns(ID)
+	
+	@handler Update
+	patch /user(Detail) returns()
+	
+	@handler Delete
+	delete /user/:uid(ID) returns()
+	
+	@handler List
+	get /users(Paginator) returns(DetailList)
+	
+	@handler Detail
+	get /user(ID) returns(Detail)
+	
+	@handler ChangePassword
+	patch /user/password(PasswordChange) returns()
+}

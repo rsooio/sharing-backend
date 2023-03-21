@@ -1,0 +1,9 @@
+Name: backend-api
+Host: 0.0.0.0
+Port: 8088
+DSN: backend.sqlite
+Auth:
+  AccessSecret: 1542100452e040ed1a278f3ffbe30fd0
+  AccessExpire: 604800
+Log:
+  Encoding: plain

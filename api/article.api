@@ -1,0 +1,10 @@
+syntax = "v2"
+
+// @server(
+// 	jwt: Auth
+// 	group: auticle
+// )
+// service backend-api {
+// 	@handler Create
+// 	post /article
+// }

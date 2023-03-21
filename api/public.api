@@ -1,0 +1,32 @@
+syntax = "v2"
+
+type LoginReq {
+	Type   string `json:"type,options=sms|pwd,default=sms"`
+	Mobile string `json:"mobile"`
+	Secret string `json:"secret"`
+}
+
+type LoginResp {
+	Token     string `json:"token"`
+	ExpireAt  int64  `json:"expire"`
+	Resources uint64 `json:"res"`
+}
+
+type OtpReq {
+	Mobile string `form:"mobile"`
+}
+
+type OtpResp {
+	Limit int `json:"limit"`
+}
+
+@server(
+	group: public
+)
+service backend-api {
+	@handler Login
+	post /user/login(LoginReq) returns(LoginResp)
+	
+	@handler OneTimePassword
+	get /user/otp(OtpReq) returns(OtpResp)
+}

@@ -1,0 +1,44 @@
+syntax = "v2"
+
+type ID {
+	ID uint `json:"uid",path:"uid"`
+}
+
+type Resource {
+	Name      string `json:"name"`
+	Describe  string `json:"desc"`
+	Resources string `json:"res"`
+}
+
+type Detail {
+	ID
+	Resource
+}
+
+type DetailList {
+	List  []Detail `json:"list"`
+	Total int64    `json:"total"`
+}
+
+type Paginator {
+	PageSize   int `json:"ps"`
+	PageNumber int `json:"pn"`
+}
+
+@server(
+	jwt: Auth
+	group: user
+)
+service backend-api {
+	@handler Create
+	post /role(Resource) returns(ID)
+	
+	@handler Delete
+	delete /role/:uid(ID) returns()
+	
+	@handler Update
+	patch /role(Detail) returns()
+	
+	@handler List
+	get /roles(Paginator) returns(DetailList)
+}
